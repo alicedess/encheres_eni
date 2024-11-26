@@ -33,11 +33,11 @@ public class SpringSecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/test").permitAll()
                     .requestMatchers("/").permitAll()
                     .anyRequest().authenticated();
-        }).formLogin(Customizer.withDefaults()).build();
+        });
 
         http.formLogin(form -> {
             form.loginPage("/login").permitAll();
-//            form.defaultSuccessUrl("/session").permitAll();
+            form.defaultSuccessUrl("/session").permitAll();
         });
         return http.getOrBuild();
     }
