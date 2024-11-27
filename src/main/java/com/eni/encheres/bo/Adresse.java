@@ -49,4 +49,16 @@ public class Adresse {
     public void setAdresse_eni(Boolean adresse_eni) {
         this.adresse_eni = adresse_eni;
     }
+
+
+    @Override
+    public String toString() {
+        return "Adresse{" +
+                "no_adresse=" + no_adresse +
+                ", rue='" + rue + '\'' +
+                ", code_postal='" + code_postal + '\'' +
+                ", ville='" + ville + '\'' +
+                ", adresse_eni=" + adresse_eni +
+                '}';
+    }
 }
