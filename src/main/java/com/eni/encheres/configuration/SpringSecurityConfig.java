@@ -32,6 +32,7 @@ public class SpringSecurityConfig {
             auth
                     .requestMatchers(HttpMethod.GET, "/test").permitAll()
                     .requestMatchers("/").permitAll()
+                    .requestMatchers("/articles/list").permitAll()
                     .anyRequest().authenticated();
         });
 
