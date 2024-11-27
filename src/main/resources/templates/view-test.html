@@ -13,6 +13,9 @@
 
 <!-- Contenu principal -->
 <main class="container mx-auto mt-6 px-4">
+  <h1>Test de page - <span data-th-text="${user.nom}"></span> - Rue <span
+        data-th-text="${user.adresse.ville}"></span>
+  </h1>
     <section th:replace="fragments/content :: content"></section>
 </main>
 
