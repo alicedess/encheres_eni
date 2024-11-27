@@ -34,6 +34,7 @@ public class SpringSecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/test").permitAll()
                     .requestMatchers("/css/**", "/images/**").permitAll()
                     .requestMatchers("/").permitAll()
+                    .requestMatchers("/articles/list").permitAll()
                     .anyRequest().authenticated();
         });
 
