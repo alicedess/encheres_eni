@@ -8,7 +8,16 @@ public class Utilisateur {
     private String telephone;
     private Integer credit;
     private Boolean administrateur;
-    private Adresse no_adresse;
+    private Adresse adresse;
+
+    public Adresse getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
+    }
+
 
     public Utilisateur() {
     }
@@ -69,11 +78,28 @@ public class Utilisateur {
         this.administrateur = administrateur;
     }
 
-    public Adresse getNo_adresse() {
-        return no_adresse;
+    @Override
+    public String toString() {
+        return "Utilisateur{" +
+                "pseudo='" + pseudo + '\'' +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", email='" + email + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", credit=" + credit +
+                ", administrateur=" + administrateur +
+                ", adresse=" + adresse +
+                '}';
     }
 
-    public void setNo_adresse(Adresse no_adresse) {
-        this.no_adresse = no_adresse;
+    public void setPublicUser(Utilisateur utilisateur) {
+        this.pseudo = utilisateur.getPseudo();
+        this.nom = utilisateur.getNom();
+        this.prenom = utilisateur.getPrenom();
+        this.email = utilisateur.getEmail();
+        this.telephone = utilisateur.getTelephone();
+        this.credit = utilisateur.getCredit();
+        this.administrateur = utilisateur.getAdministrateur();
+        this.adresse = utilisateur.getAdresse();
     }
 }

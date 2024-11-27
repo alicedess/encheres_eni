@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Test de page - <span data-th-text="${user.nom}"></span></h1>
+<h1>Test de page - <span data-th-text="${user.nom}"></span> - Rue <span
+        data-th-text="${user.adresse.ville}"></span>
+</h1>
 </body>
 </html>

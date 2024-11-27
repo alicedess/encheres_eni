@@ -30,11 +30,13 @@ public class LoginController {
     public String connexion(@ModelAttribute("userSession") Utilisateur userSession, Principal principal) {
         String pseudo = principal.getName();
         Utilisateur utilisateur = this.contexteService.charger(pseudo);
+        System.out.println(utilisateur);
         if (utilisateur != null) {
-            userSession.setNom(utilisateur.getNom());
-            userSession.setPrenom(utilisateur.getPrenom());
-            userSession.setPseudo(utilisateur.getPseudo());
-            userSession.setAdministrateur(utilisateur.getAdministrateur());
+            userSession.setPublicUser(utilisateur);
+//            userSession.setNom(utilisateur.getNom());
+//            userSession.setPrenom(utilisateur.getPrenom());
+//            userSession.setPseudo(utilisateur.getPseudo());
+//            userSession.setAdministrateur(utilisateur.getAdministrateur());
         } else {
             userSession.setNom(null);
             userSession.setPrenom(null);

@@ -1,5 +1,6 @@
 package com.eni.encheres.dao;
 
+import com.eni.encheres.bo.Adresse;
 import com.eni.encheres.bo.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,10 +14,13 @@ import java.sql.SQLException;
 @Repository
 public class UtilisateurDAOImpl implements UtilisateurDAO {
 
-    private final String FIND_BY_PSEUDO = "SELECT pseudo, email, nom, prenom, telephone, credit, administrateur from utilisateurs WHERE pseudo = :pseudo";
+    private final String FIND_BY_PSEUDO = "SELECT pseudo, email, nom, prenom, telephone, credit, administrateur, no_adresse from utilisateurs WHERE pseudo = :pseudo";
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private AdresseDAOImpl adresseDAOImpl;
 
     @Override
     public Utilisateur read(String pseudo) {
@@ -38,6 +42,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             u.setCredit(rs.getInt("credit"));
             u.setAdministrateur(rs.getBoolean("administrateur"));
 
+            u.setAdresse(adresseDAOImpl.read(rs.getInt("no_adresse")));
             return u;
         }
 
