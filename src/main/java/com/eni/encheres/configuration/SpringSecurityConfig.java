@@ -31,6 +31,7 @@ public class SpringSecurityConfig {
         http.authorizeHttpRequests(auth -> {
             auth
                     .requestMatchers(HttpMethod.GET, "/test").permitAll()
+                    .requestMatchers("/css/**", "/images/**").permitAll()
                     .requestMatchers("/").permitAll()
                     .anyRequest().authenticated();
         }).formLogin(Customizer.withDefaults()).build();

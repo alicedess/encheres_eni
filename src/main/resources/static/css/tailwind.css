@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*Styles perso*/
+
+@layer utilities {
+    .container {
+        @apply max-w-7xl mx-auto px-4;
+    }
+
+    .btn {
+        @apply bg-blue-600 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-700;
+    }
+
+    .form-input {
+        @apply w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-300 focus:outline-none;
+    }
+
+    .card {
+        @apply bg-white shadow-md rounded-md p-6;
+    }
+}
+
+@layer base {
+    :root {
+        --primary-color: #065996;
+        --secondary-color: #D1D5DB;
+        --background-color: #F3F4F6;
+        --accent-color: #10B981;
+    }
+}

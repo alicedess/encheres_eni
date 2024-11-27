@@ -1,15 +1,35 @@
 <div th:fragment="header">
-    <header class="bg-blue-600 text-white py-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold">Les objets sont nos amis</h1>
-            <nav>
-                <ul class="flex space-x-4">
-                    <li><a href="/" class="hover:underline">Accueil</a></li>
-                    <li><a href="/login" class="hover:underline">S'inscrire - Se connecter</a></li>
-                    <li><a href="/sell" class="hover:underline">Vendre un article</a></li>
-                    <li><a href="/profile" class="hover:underline">Mon profile</a></li>
+    <div class="bg-[#065996] text-white py-4">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-bold text-center sm:text-left">
+                Les objets sont nos amis
+            </h1>
+
+            <!-- Menu Hamburger (mobile) -->
+            <button class="sm:hidden text-white text-2xl focus:outline-none" id="menu-toggle">
+                &#9776; <!-- Symbole du hamburger -->
+            </button>
+
+            <!-- Navigation Principale -->
+            <nav id="navbar" class="sm:flex sm:space-x-6 space-y-4 sm:space-y-0 absolute sm:relative sm:block bg-primary sm:bg-transparent top-0 left-0 w-full sm:w-auto transform sm:transform-none transition-all duration-300 ease-in-out" style="display:none">
+                <ul class="flex flex-col sm:flex-row sm:space-x-6 space-y-4 sm:space-y-0">
+                    <li><a href="/" class="hover:underline hover:text-blue-300 transition-all">Accueil</a></li>
+                    <li><a href="/login" class="hover:underline hover:text-blue-300 transition-all">S'inscrire - Se connecter</a></li>
+                    <li><a href="/sell" class="hover:underline hover:text-blue-300 transition-all">Vendre un article</a></li>
+                    <li><a href="/profile" class="hover:underline hover:text-blue-300 transition-all">Mon profil</a></li>
                 </ul>
             </nav>
         </div>
-    </header>
+    </div>
+
+    <!-- JavaScript pour le menu mobile -->
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const navbar = document.getElementById('navbar');
+
+        menuToggle.addEventListener('click', () => {
+            navbar.classList.toggle('hidden');
+        });
+    </script>
+
 </div>
