@@ -4,5 +4,5 @@ import com.eni.encheres.bo.Utilisateur;
 
 public interface UtilisateurDAO {
 
-    Utilisateur read(String pseudo);
+    Utilisateur find(String pseudo);
 }

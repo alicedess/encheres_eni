@@ -10,16 +10,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.List;
 
-@SessionAttributes({"userSession"})
 @Controller
 @RequestMapping("/")
 public class TestController {
 
 
     @GetMapping
-    public String showTest(Model model, @ModelAttribute("userSession") Utilisateur userSession) {
+    public String showTest() {
         // Ajout des films dans le modèle
-        model.addAttribute("user", userSession);
         return "view-test";
     }
 
