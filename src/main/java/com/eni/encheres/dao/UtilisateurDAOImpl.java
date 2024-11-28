@@ -23,7 +23,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     private AdresseDAOImpl adresseDAOImpl;
 
     @Override
-    public Utilisateur read(String pseudo) {
+    public Utilisateur find(String pseudo) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("pseudo", pseudo);
         return jdbcTemplate.queryForObject(FIND_BY_PSEUDO, mapSqlParameterSource, new UtilisateurRowMapper());
@@ -42,7 +42,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             u.setCredit(rs.getInt("credit"));
             u.setAdministrateur(rs.getBoolean("administrateur"));
 
-            u.setAdresse(adresseDAOImpl.read(rs.getInt("no_adresse")));
+            Adresse adresse = new Adresse();
+            adresse.setNo_adresse(rs.getInt("no_adresse"));
+            u.setAdresse(adresse);
             return u;
         }
 

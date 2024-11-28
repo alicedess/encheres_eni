@@ -38,7 +38,6 @@ public class SpringSecurityConfig {
 
         http.formLogin(form -> {
             form.loginPage("/login").permitAll();
-            form.defaultSuccessUrl("/session").permitAll();
         });
         return http.getOrBuild();
     }
