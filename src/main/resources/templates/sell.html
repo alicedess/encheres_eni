@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendre un article</title>
+    <link href="/css/output.css" rel="stylesheet">
+</head>
+<body>
+<!-- Header -->
+<div th:insert="fragments/header :: header"></div>
+
+<!-- Contenu principal -->
+<main class="container mx-auto mt-8">
+    <h1 class="text-2xl font-bold text-center">Vendre un article</h1>
+
+    <form th:action="@{/articles/vendre}" method="post" class="max-w-lg mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mt-6">
+        <!-- Nom de l'article -->
+        <div class="mb-4">
+            <label for="nom_article" class="block text-gray-700 text-sm font-bold mb-2">Nom de l'article :</label>
+            <input type="text" id="nom_article" name="nom_article" placeholder="Nom de l'article"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-4">
+            <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description :</label>
+            <textarea id="description" name="description" rows="3" placeholder="Description de l'article"
+                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
+        </div>
+
+        <!-- Catégorie -->
+        <div class="mb-4">
+            <label for="no_categorie" class="block text-gray-700 text-sm font-bold mb-2">Catégorie :</label>
+            <select id="no_categorie" name="no_categorie"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                <option value="" disabled selected>Choisissez une catégorie</option>
+                <option th:each="categorie : ${categories}" th:value="${categorie.no_categorie}" th:text="${categorie.nom_categorie}"></option>
+            </select>
+        </div>
+
+        <!-- Prix de départ -->
+        <div class="mb-4">
+            <label for="prix_initial" class="block text-gray-700 text-sm font-bold mb-2">Prix de départ (en points) :</label>
+            <input type="number" id="prix_initial" name="prix_initial" placeholder="Prix initial"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+        </div>
+
+        <!-- Date d'ouverture -->
+        <div class="mb-4">
+            <label for="date_debut_encheres" class="block text-gray-700 text-sm font-bold mb-2">Date d'ouverture des enchères :</label>
+            <input type="datetime-local" id="date_debut_encheres" name="date_debut_encheres"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+        </div>
+
+        <!-- Date de fin -->
+        <div class="mb-4">
+            <label for="date_fin_encheres" class="block text-gray-700 text-sm font-bold mb-2">Date de fin des enchères :</label>
+            <input type="datetime-local" id="date_fin_encheres" name="date_fin_encheres"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+        </div>
+
+        <!-- Adresse de retrait -->
+        <div class="mb-4">
+            <label for="no_adresse_retrait" class="block text-gray-700 text-sm font-bold mb-2">Adresse de retrait :</label>
+            <select id="no_adresse_retrait" name="no_adresse_retrait"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <option th:each="adresse : ${adresses}" th:value="${adresse.no_adresse}" th:text="${adresse.description}"></option>
+            </select>
+        </div>
+
+        <!-- Bouton de soumission -->
+        <div class="flex items-center justify-between">
+            <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Mettre en vente
+            </button>
+        </div>
+    </form>
+</main>
+
+<!-- Footer -->
+<div th:insert="fragments/footer :: footer"></div>
+</body>
+</html>
