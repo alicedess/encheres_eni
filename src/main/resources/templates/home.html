@@ -1,31 +1,97 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      lang="en"
-      layout:decorate="~{layout/base}"
->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les objets sont nos amis</title>
+    <link href="/css/output.css" rel="stylesheet">
+    <link href="/css/tailwind.css" rel="stylesheet">
+    <link href="/css/uikit.min.css" rel="stylesheet" />
+    <script src="/js/uikit-icons.min.js"></script>
+    <script src="/js/uikit.min.js"></script>
+    <script src="/js/home.js"></script>
+</head>
 <body>
-<!-- Surcharger le content -->
-<div layout:fragment="content">
-    <div class="uk-container">
-        <button>Filtres</button>
+    <div class="max-w-7xl mx-auto bg-white shadow-md p-6 rounded">
+        <form action="/articles/search-encheres">
+            <div>Filtres :</div>
+            <!-- Barre de recherche -->
+            <div class="flex items-center space-x-4 mb-6">
+                <input
+                        type="text"
+                        name="filter-name"
+                        placeholder="Le nom de l'article contient"
+                        class="w-full border rounded px-4 py-2"
+                        th:value="${searchQuery}"/>
+                <button type="submit" class="bg-blue-500 px-4 py-2 rounded">Rechercher</button>
+                <button type="button" onclick="resetFilters()" class="bg-gray-300 px-4 py-2 rounded">Annuler</button>
+            </div>
 
-        <div th:each="article : ${articles}" class="uk-padding-small">
-            <div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
-                <div class="uk-card-media-left uk-cover-container">
-                    <img src="../static/Images/chaise-bureau.jpg" alt="" uk-cover>
-                    <canvas width="600" height="400"></canvas>
+            <!-- Filtres -->
+            <div class="flex items-center space-x-6 mb-6">
+                <label for="select-cat">Catégorie :</label>
+                <select
+                        id="select-cat"
+                        name="filter-cat"
+                        class="border rounded px-4 py-2"
+                        th:value="${selectedCategory}">
+                    <option value="0">Toutes</option>
+                    <option th:each="cat : ${categories}" th:value="${cat.getNo_categorie()}" th:text="${cat.getLibelle()}"></option>
+                </select>
+
+                <div class="flex items-center space-x-2">
+                    <label>
+                        <input type="radio" name="filterType" value="achats" class="mr-2" th:checked="${filterType == 'achats'}">
+                        Achats
+                    </label>
+                    <select
+                            class="border rounded px-4 py-2"
+                            th:disabled="${filterType != 'achats'}">
+                        <option value="open">Enchères ouvertes</option>
+                        <option value="in_progress">Mes enchères en cours</option>
+                        <option value="won">Mes enchères remportées</option>
+                    </select>
                 </div>
-                <div>
-                    <div class="uk-card-body">
-                        <h3 class="uk-card-title" th:text="${article.nom_article}"></h3>
-                        <div>Prix : <span th:text="${article.prix_initial} + ' '"></span></div>
-                        <div>Fin de l'enchère : <span th:text="${article.date_fin_encheres} + ' '"></span></div>
-                        <div>vendeur : <span th:text="${article.id_utilisateur} + ' '"></span></div>
-                    </div>
+
+                <div class="flex items-center space-x-2">
+                    <label>
+                        <input type="radio" name="filterType" value="ventes" class="mr-2" th:checked="${filterType == 'ventes'}">
+                        Mes ventes
+                    </label>
+                    <select
+                            class="border rounded px-4 py-2"
+                            th:disabled="${filterType != 'ventes'}">
+                        <option value="current">Mes ventes en cours</option>
+                        <option value="upcoming">Mes ventes non débutées</option>
+                        <option value="finished">Mes ventes terminées</option>
+                    </select>
                 </div>
+            </div>
+        </form>
+
+        <!-- Liste des enchères -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div
+                    class="bg-white border rounded p-4 shadow"
+                    th:each="article : ${articles}">
+                <div class="h-32 bg-gray-200 rounded mb-4"></div>
+                <a
+                        href="/details/${item.id}"
+                        class="text-blue-600 text-lg font-bold hover:underline"
+                        th:text="${article.nom_article}"></a>
+                <p class="mt-2">
+                    Prix : <span th:text="${article.prix_initial}"></span> point(s)
+                </p>
+                <p>Fin de l'enchère : <span th:text="${article.date_fin_encheres}"></span></p>
+                <p>
+                    Vendeur :
+                    <a
+                            href="/profile/${item.seller.id}"
+                            class="text-blue-500 hover:underline"
+                            th:text="${article.id_utilisateur}"></a>
+                </p>
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>

@@ -32,7 +32,10 @@ public class SpringSecurityConfig {
             auth
                     .requestMatchers(HttpMethod.GET, "/test").permitAll()
                     .requestMatchers("/").permitAll()
-                    .requestMatchers("/articles/list").permitAll()
+                    .requestMatchers("/articles/**").permitAll()
+                    .requestMatchers("/css/**").permitAll()
+                    .requestMatchers("/js/**").permitAll()
+                    .requestMatchers("/images/**").permitAll()
                     .anyRequest().authenticated();
         }).formLogin(Customizer.withDefaults()).build();
 
