@@ -32,10 +32,9 @@
         <!-- Catégorie -->
         <div class="mb-4">
             <label for="no_categorie" class="block text-gray-700 text-sm font-bold mb-2">Catégorie :</label>
-            <select id="no_categorie" name="no_categorie"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            <select id="no_categorie" name="no_categorie" th:field="*{no_categorie}" class="shadow border rounded w-full py-2 px-3">
                 <option value="" disabled selected>Choisissez une catégorie</option>
-                <option th:each="categorie : ${categories}" th:value="${categorie.no_categorie}" th:text="${categorie.nom_categorie}"></option>
+                <option th:each="categorie : ${categories}" th:value="${categorie.noCategorie}" th:text="${categorie.nom}"></option>
             </select>
         </div>
 
@@ -60,14 +59,14 @@
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
         </div>
 
-        <!-- Adresse de retrait -->
-        <div class="mb-4">
-            <label for="no_adresse_retrait" class="block text-gray-700 text-sm font-bold mb-2">Adresse de retrait :</label>
-            <select id="no_adresse_retrait" name="no_adresse_retrait"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                <option th:each="adresse : ${adresses}" th:value="${adresse.no_adresse}" th:text="${adresse.description}"></option>
-            </select>
-        </div>
+<!--        &lt;!&ndash; Adresse de retrait &ndash;&gt;-->
+<!--        <div class="mb-4">-->
+<!--            <label for="no_adresse_retrait" class="block text-gray-700 text-sm font-bold mb-2">Adresse de retrait :</label>-->
+<!--            <select id="no_adresse_retrait" name="no_adresse_retrait" th:field="*{no_adresse_retrait}" class="shadow border rounded w-full py-2 px-3">-->
+<!--                <option value="" disabled selected>Choisissez une adresse</option>-->
+<!--                <option th:each="adresse : ${addresses}" th:value="${adresse}" th:text="${adresse}"></option>-->
+<!--            </select>-->
+<!--        </div>-->
 
         <!-- Bouton de soumission -->
         <div class="flex items-center justify-between">

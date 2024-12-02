@@ -1,9 +1,12 @@
 package com.eni.encheres.bll;
 
+import com.eni.encheres.bo.Adresse;
 import com.eni.encheres.bo.Article;
+import com.eni.encheres.bo.Categorie;
 import com.eni.encheres.dao.ArticleDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.eni.encheres.dao.CategorieDAO;
 
 import java.util.List;
 
@@ -11,6 +14,9 @@ import java.util.List;
 public class ArticleService {
     @Autowired
     ArticleDAO articleDAO;
+
+    @Autowired
+    CategorieDAO categorieDAO;
 
     public List<Article> getUserArticles(String userId) {
         return articleDAO.selectArticlesByUser(userId);
@@ -23,4 +29,20 @@ public class ArticleService {
     public void saveArticle(Article article) {
         articleDAO.insertArticle(article);
     }
+
+    public void deleteArticle(Integer articleId) {
+        articleDAO.deleteById(articleId);
+    }
+
+
+    public List<Categorie> getAllCategories() {
+        return categorieDAO.findAll();
+    }
 }
+
+//    public List<Adresse> getAvailableAddresses(String userId) {
+//        List<Adresse> addresses = adresseDAO.findAllByUserId(userId);
+//        addresses.addAll(adresseDAO.findDefaultAddresses());
+//        return addresses;
+//    }
+//}

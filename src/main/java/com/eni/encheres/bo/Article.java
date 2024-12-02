@@ -1,14 +1,24 @@
 package com.eni.encheres.bo;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Date;
 
 public class Article {
     private Integer no_article;
+    @NotNull(message = "Le nom de l'article est obligatoire.")
+    @Size(min = 3, max = 50, message = "Le nom de l'article doit contenir entre 3 et 50 caractères.")
     private String nom_article;
     private String photo;
+    @FutureOrPresent(message = "La date de début doit être dans le futur ou aujourd'hui.")
     private Date date_debut_encheres;
+    @Future(message = "La date de fin doit être dans le futur.")
     private Date date_fin_encheres;
     private Integer statut_enchere;
+    @NotNull(message = "Le prix initial est obligatoire.")
     private Integer prix_initial;
     private String id_utilisateur;
     private Integer no_categorie;
@@ -30,7 +40,7 @@ public class Article {
         return nom_article;
     }
 
-    public void setNom_article(String rue) {
+    public void setNom_article(String nom_article) {
         this.nom_article = nom_article;
     }
 
@@ -83,4 +93,6 @@ public class Article {
     public void setNo_adresse_retrait(Integer no_adresse_retrait) {
         this.no_adresse_retrait = no_adresse_retrait;
     }
+
+
 }
