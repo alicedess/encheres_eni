@@ -2,7 +2,7 @@ package com.eni.encheres.bo;
 
 import java.util.Date;
 
-public class ArticleAVendre {
+public class Article {
     private Integer no_article;
     private String nom_article;
     private String photo;
@@ -15,7 +15,7 @@ public class ArticleAVendre {
     private Integer no_adresse_retrait;
 
 
-    public ArticleAVendre() {
+    public Article() {
     }
 
     public Integer getNo_article() {
