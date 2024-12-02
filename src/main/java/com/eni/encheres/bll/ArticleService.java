@@ -1,8 +1,7 @@
 package com.eni.encheres.bll;
 
-import com.eni.encheres.bo.ArticleAVendre;
-import com.eni.encheres.dao.ArticleAVendreRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.eni.encheres.bo.Article;
+import com.eni.encheres.dao.ArticleDAO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,14 +9,13 @@ import java.util.List;
 @Service
 public class ArticleService {
 
-    @Autowired
-    ArticleAVendreRepository daoArticle;
-
-    public List<ArticleAVendre> getAll() {
+    private final ArticleDAO daoArticle;
+    public ArticleService(ArticleDAO daoArticle) {
+        this.daoArticle = daoArticle;
+    }
+    public List<Article> getArticles(int catId) {
         // Récupérer les articles via la DAO
-        List<ArticleAVendre> articles = daoArticle.selectArticles();
 
-        System.out.println("ici" + articles.toString());
-        return articles;
+        return daoArticle.selectArticles(catId);
     }
 }
