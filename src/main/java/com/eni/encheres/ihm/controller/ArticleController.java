@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-
 @Controller
 @RequestMapping("/articles")
 public class ArticleController {
@@ -19,9 +18,6 @@ public class ArticleController {
 
     @Autowired
     private CategorieService categorieService;
-
-//    @Autowired
-//    private AdresseService adresseService;
 
     @GetMapping
     public String listArticles(Model model) {
@@ -33,7 +29,6 @@ public class ArticleController {
     public String showSellForm(Model model) {
         model.addAttribute("article", new Article());
         model.addAttribute("categories", categorieService.getAllCategories());
-//        model.addAttribute("addresses", adresseService.getAvailableAddresses("currentUser"));
         return "article/sell";
     }
 
@@ -52,6 +47,10 @@ public class ArticleController {
     public String saveArticle(@ModelAttribute("article") @Valid Article article, BindingResult result) {
         if (result.hasErrors()) {
             return "article/sell";
+        }
+
+        if (article.getStatut_enchere() == null) {
+            article.setStatut_enchere(0);
         }
 
         article.setId_utilisateur("currentUser"); // Utilisateur connecté

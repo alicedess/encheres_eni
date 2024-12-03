@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Profile("mysql")
@@ -22,8 +24,13 @@ public class ArticleDAOImpl implements ArticleDAO {
         article.setNo_article(rs.getInt("no_article"));
         article.setNom_article(rs.getString("nom_article"));
         article.setPhoto(rs.getString("photo"));
-        article.setDate_debut_encheres(rs.getDate("date_debut_encheres"));
-        article.setDate_fin_encheres(rs.getDate("date_fin_encheres"));
+
+        // Gestion des dates avec LocalDateTime
+        Timestamp dateDebut = rs.getTimestamp("date_debut_encheres");
+        Timestamp dateFin = rs.getTimestamp("date_fin_encheres");
+        article.setDate_debut_encheres(dateDebut != null ? dateDebut.toLocalDateTime() : null);
+        article.setDate_fin_encheres(dateFin != null ? dateFin.toLocalDateTime() : null);
+
         article.setStatut_enchere(rs.getInt("statut_enchere"));
         article.setPrix_initial(rs.getInt("prix_initial"));
         article.setId_utilisateur(rs.getString("id_utilisateur"));
@@ -51,8 +58,11 @@ public class ArticleDAOImpl implements ArticleDAO {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, article.getNom_article());
             ps.setString(2, article.getPhoto());
-            ps.setDate(3, new java.sql.Date(article.getDate_debut_encheres().getTime()));
-            ps.setDate(4, new java.sql.Date(article.getDate_fin_encheres().getTime()));
+
+            // Gestion des dates pour l'insertion
+            ps.setTimestamp(3, article.getDate_debut_encheres() != null ? Timestamp.valueOf(article.getDate_debut_encheres()) : null);
+            ps.setTimestamp(4, article.getDate_fin_encheres() != null ? Timestamp.valueOf(article.getDate_fin_encheres()) : null);
+
             ps.setInt(5, article.getStatut_enchere());
             ps.setInt(6, article.getPrix_initial());
             ps.setString(7, article.getId_utilisateur());
@@ -60,5 +70,11 @@ public class ArticleDAOImpl implements ArticleDAO {
             ps.setInt(9, article.getNo_adresse_retrait());
             return ps;
         });
+    }
+
+    @Override
+    public void deleteById(Integer articleId) {
+        String sql = "DELETE FROM articles_a_vendre WHERE no_article = ?";
+        jdbcTemplate.update(sql, articleId);
     }
 }
