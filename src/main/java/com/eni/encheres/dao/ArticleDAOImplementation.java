@@ -4,11 +4,14 @@ import com.eni.encheres.bo.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ArticleDAOImplementation implements ArticleDAO {
@@ -35,13 +38,27 @@ public class ArticleDAOImplementation implements ArticleDAO {
             return article;
         }
     };
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     @Override
-    public List<Article> selectArticles(int catId) {
-        String sqlRequest = "SELECT * FROM encheres_db.articles_a_vendre";
+    public List<Article> selectArticles(int catId, String name) {
+        StringBuilder sqlRequest = new StringBuilder("SELECT * FROM encheres_db.articles_a_vendre");
+        Map<String, Object> params = new HashMap<>();
+
+        boolean hasWhere = false;
         if (catId > 0) {
-            sqlRequest = sqlRequest + " WHERE no_categorie = " + catId;
+            sqlRequest.append(" WHERE no_categorie = :catId");
+            params.put("catId", catId);
+            hasWhere = true;
         }
-        return jdbcTemplate.query(sqlRequest, ARTICLE_ROW_MAPPER);
+        if (name != null && !name.isEmpty()) {
+            sqlRequest.append(hasWhere ? " AND" : " WHERE");
+            sqlRequest.append(" nom_article LIKE :name");
+            params.put("name", "%" + name + "%");
+        }
+
+        return namedParameterJdbcTemplate.query(sqlRequest.toString(), params, ARTICLE_ROW_MAPPER);
     }
 
 }

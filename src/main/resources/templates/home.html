@@ -12,33 +12,36 @@
     <script src="/js/home.js"></script>
 </head>
 <body>
-    <div class="max-w-7xl mx-auto bg-white shadow-md p-6 rounded">
+    <div class="mx-auto bg-white p-6 rounded">
         <form action="/articles/search-encheres">
             <div>Filtres :</div>
             <!-- Barre de recherche -->
-            <div class="flex items-center space-x-4 mb-6">
-                <input
-                        type="text"
-                        name="filter-name"
-                        placeholder="Le nom de l'article contient"
-                        class="w-full border rounded px-4 py-2"
-                        th:value="${searchQuery}"/>
-                <button type="submit" class="bg-blue-500 px-4 py-2 rounded">Rechercher</button>
-                <button type="button" onclick="resetFilters()" class="bg-gray-300 px-4 py-2 rounded">Annuler</button>
+            <div class="flex items-center" style="width: 32rem">
+                <input id="nameFilter"
+                       type="text"
+                       name="nameFilter"
+                       placeholder="Le nom de l'article contient"
+                       class="border rounded px-4 py-2"
+                       style="width: 15rem"
+                       th:value="${nameFilter}" />
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Rechercher
+                </button>
             </div>
-
-            <!-- Filtres -->
-            <div class="flex items-center space-x-6 mb-6">
-                <label for="select-cat">Catégorie :</label>
-                <select
-                        id="select-cat"
-                        name="filter-cat"
-                        class="border rounded px-4 py-2"
-                        th:value="${selectedCategory}">
-                    <option value="0">Toutes</option>
-                    <option th:each="cat : ${categories}" th:value="${cat.getNo_categorie()}" th:text="${cat.getLibelle()}"></option>
-                </select>
-
+            <div class="flex items-center">
+                <label for="categoryFilter">Catégorie :
+                    <select id="categoryFilter"
+                            name="categoryFilter"
+                            class="border rounded px-4 py-2">
+                        <option value="0">Toutes</option>
+                        <option th:each="cat : ${categories}" th:value="${cat.getNo_categorie()}" th:text="${cat.getLibelle()}" th:selected="${selectedCategory == cat.getNo_categorie()}"></option>
+                    </select>
+                </label>
+                <button type="button" onclick="resetFilters()" class="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400">
+                    Annuler
+                </button>
+            </div>
+            <div th:if="false">
                 <div class="flex items-center space-x-2">
                     <label>
                         <input type="radio" name="filterType" value="achats" class="mr-2" th:checked="${filterType == 'achats'}">
@@ -70,25 +73,21 @@
         </form>
 
         <!-- Liste des enchères -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div
-                    class="bg-white border rounded p-4 shadow"
-                    th:each="article : ${articles}">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white border rounded p-4 shadow" th:each="article : ${articles}">
                 <div class="h-32 bg-gray-200 rounded mb-4"></div>
-                <a
-                        href="/details/${item.id}"
-                        class="text-blue-600 text-lg font-bold hover:underline"
-                        th:text="${article.nom_article}"></a>
+                <a href="/details/${item.id}"
+                   class="text-blue-600 text-lg font-bold hover:underline"
+                   th:text="${article.nom_article}">{{ article.nom_article }}</a>
                 <p class="mt-2">
                     Prix : <span th:text="${article.prix_initial}"></span> point(s)
                 </p>
                 <p>Fin de l'enchère : <span th:text="${article.date_fin_encheres}"></span></p>
                 <p>
                     Vendeur :
-                    <a
-                            href="/profile/${item.seller.id}"
-                            class="text-blue-500 hover:underline"
-                            th:text="${article.id_utilisateur}"></a>
+                    <a href="/profile/${item.seller.id}"
+                       class="text-blue-500 hover:underline"
+                       th:text="${article.id_utilisateur}"></a>
                 </p>
             </div>
         </div>

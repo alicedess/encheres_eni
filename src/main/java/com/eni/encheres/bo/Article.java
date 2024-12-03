@@ -30,7 +30,7 @@ public class Article {
         return nom_article;
     }
 
-    public void setNom_article(String rue) {
+    public void setNom_article(String nom_article) {
         this.nom_article = nom_article;
     }
 
