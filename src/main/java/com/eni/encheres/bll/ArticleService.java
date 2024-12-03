@@ -13,9 +13,9 @@ public class ArticleService {
     public ArticleService(ArticleDAO daoArticle) {
         this.daoArticle = daoArticle;
     }
-    public List<Article> getArticles(int catId) {
+    public List<Article> getArticles(int catId, String name) {
         // Récupérer les articles via la DAO
 
-        return daoArticle.selectArticles(catId);
+        return daoArticle.selectArticles(catId, name);
     }
 }

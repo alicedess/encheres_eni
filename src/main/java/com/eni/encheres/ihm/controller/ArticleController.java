@@ -4,11 +4,9 @@ import com.eni.encheres.bll.ArticleService;
 import com.eni.encheres.bll.CategorieService;
 import com.eni.encheres.bo.Article;
 import com.eni.encheres.bo.Categorie;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -28,20 +26,18 @@ public class ArticleController {
         this.categorieService = categorieService;
     }
 
-    @GetMapping("/list")
-    @PostMapping("/search-encheres")
+    @GetMapping({ "/list","/search-encheres"})
     public String showHome(@RequestParam(value = "nameFilter", required = false) String nameFilter,
-                           @RequestParam(value = "categoryFilter", required = false) String categoryFilter,
+                           @RequestParam(value = "categoryFilter", required = false) Integer categoryFilter,
                            Model model) {
-        List<Article> articles;
-        if (categoryFilter != null) {
-            articles = articleService.getArticles(parseInt(categoryFilter));
-        }else {
-            articles = articleService.getArticles(0);
-        }
+        List<Article> articles = articleService.getArticles(categoryFilter, nameFilter);
         List<Categorie> categories = categorieService.getAll();
+
         model.addAttribute("articles", articles);
         model.addAttribute("categories", categories);
+        model.addAttribute("selectedCategory", categoryFilter);
+        model.addAttribute("nameFilter", nameFilter);
+
         return "home";
     }
 }
