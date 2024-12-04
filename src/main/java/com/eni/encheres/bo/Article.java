@@ -40,6 +40,7 @@ public class Article {
 
     public Article() {
         this.statut_enchere = 0;
+        this.no_adresse_retrait = null;
     }
 
     // Getters et Setters

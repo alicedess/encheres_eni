@@ -53,21 +53,22 @@ public class ArticleDAOImpl implements ArticleDAO {
 
     @Override
     public void insertArticle(Article article) {
-        String sql = "INSERT INTO articles_a_vendre (nom_article, photo, date_debut_encheres, date_fin_encheres, statut_enchere, prix_initial, id_utilisateur, no_categorie, no_adresse_retrait) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO articles_a_vendre (nom_article, description, photo, date_debut_encheres, date_fin_encheres, statut_enchere, prix_initial, id_utilisateur, no_categorie, no_adresse_retrait) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, article.getNom_article());
-            ps.setString(2, article.getPhoto());
+            ps.setString(2, article.getDescription());
+            ps.setString(3, article.getPhoto());
 
-            // Gestion des dates pour l'insertion
-            ps.setTimestamp(3, article.getDate_debut_encheres() != null ? Timestamp.valueOf(article.getDate_debut_encheres()) : null);
-            ps.setTimestamp(4, article.getDate_fin_encheres() != null ? Timestamp.valueOf(article.getDate_fin_encheres()) : null);
+            ps.setTimestamp(4, article.getDate_debut_encheres() != null ? Timestamp.valueOf(article.getDate_debut_encheres()) : null);
+            ps.setTimestamp(5, article.getDate_fin_encheres() != null ? Timestamp.valueOf(article.getDate_fin_encheres()) : null);
 
-            ps.setInt(5, article.getStatut_enchere());
-            ps.setInt(6, article.getPrix_initial());
-            ps.setString(7, article.getId_utilisateur());
-            ps.setInt(8, article.getNo_categorie());
-            ps.setInt(9, article.getNo_adresse_retrait());
+            ps.setInt(6, article.getStatut_enchere());
+            ps.setInt(7, article.getPrix_initial());
+            ps.setString(8, article.getId_utilisateur());
+            ps.setInt(9, article.getNo_categorie());
+            ps.setInt(10, article.getNo_adresse_retrait());
             return ps;
         });
     }

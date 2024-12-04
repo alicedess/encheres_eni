@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/articles")
@@ -20,8 +21,9 @@ public class ArticleController {
     private CategorieService categorieService;
 
     @GetMapping
-    public String listArticles(Model model) {
+    public String listArticles(Model model, @ModelAttribute("message") String message) {
         model.addAttribute("articles", articleService.getActiveArticles());
+        model.addAttribute("message", message);
         return "article/list";
     }
 
@@ -44,17 +46,29 @@ public class ArticleController {
     }
 
     @PostMapping("/new")
-    public String saveArticle(@ModelAttribute("article") @Valid Article article, BindingResult result) {
+    public String saveArticle(@ModelAttribute("article") @Valid Article article, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "article/sell";
         }
+
+        System.out.println("Article description before saving: " + article.getDescription());
 
         if (article.getStatut_enchere() == null) {
             article.setStatut_enchere(0);
         }
 
+        if (article.getDescription() == null || article.getDescription().isEmpty()) {
+            article.setDescription("Description non fournie");
+        }
+
+        if (article.getNo_adresse_retrait() == null) {
+            article.setNo_adresse_retrait(0);
+        }
+
         article.setId_utilisateur("currentUser"); // Utilisateur connecté
         articleService.saveArticle(article);
-        return "redirect:/articles/photo/" + article.getNo_article();
+//        return "redirect:/articles/photo/" + article.getNo_article();
+        redirectAttributes.addFlashAttribute("message", "Article mis en vente avec succès !");
+        return "redirect:/articles";
     }
 }
