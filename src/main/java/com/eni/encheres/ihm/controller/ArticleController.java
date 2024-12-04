@@ -26,7 +26,7 @@ public class ArticleController {
         this.categorieService = categorieService;
     }
 
-    @GetMapping({ "/list","/search-encheres"})
+    @GetMapping("/list")
     public String showHome(@RequestParam(value = "nameFilter", required = false) String nameFilter,
                            @RequestParam(value = "categoryFilter", required = false) Integer categoryFilter,
                            Model model) {
