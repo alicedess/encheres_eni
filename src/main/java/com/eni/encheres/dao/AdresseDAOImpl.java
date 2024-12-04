@@ -19,7 +19,7 @@ public class AdresseDAOImpl implements AdresseDAO {
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
-    public Adresse read(Integer id) {
+    public Adresse find(Integer id) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("id", id);
         return jdbcTemplate.queryForObject(FIND_BY_ID, mapSqlParameterSource, new AdresseRowMapper());

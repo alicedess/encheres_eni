@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -39,8 +40,14 @@ public class SpringSecurityConfig {
 
         http.formLogin(form -> {
             form.loginPage("/login").permitAll();
-            form.defaultSuccessUrl("/session").permitAll();
         });
+
+        http.logout(logout ->
+                logout
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/login").permitAll());
         return http.getOrBuild();
     }
 }

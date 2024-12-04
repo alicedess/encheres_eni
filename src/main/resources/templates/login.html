@@ -2,34 +2,61 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Connexion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST - Enchères ENI</title>
+    <link href="/css/output.css" rel="stylesheet">
 </head>
-<body>
+<body class="flex flex-col h-screen">
 
+<div th:insert="fragments/header :: header"></div>
 
-<main>
-    <form th:action="@{/login}" method="POST">
-        <h1>Connexion</h1>
-        <div th:if="${param.error}">Erreur : login ou mot de passe incorrect</div>
-        <!--        <div th:if="${param.logout}">Vous êtes déconnecté</div>-->
-        <div class="flex-outer">
-            <div>
-                <label for="inputUsername">Pseudo</label>
-                <input id="inputUsername" type="text" name="username"/>
-            </div>
-            <div>
-                <label for="inputPassword">Mot de passe</label>
-                <input id="inputPassword" type="password" name="password"/>
-            </div>
+<div class="flex-1 flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0 ">
 
-            <div>
-                <button type="submit">Enregistrer</button>
-            </div>
+    <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
+                Connexion
+            </h1>
+            <form class="space-y-4 md:space-y-6" th:action="@{/login}" method="POST">
+                <div th:if="${param.error}" class="bg-red-500 p-2 rounded text-white ">Erreur : login ou mot de passe
+                    incorrect
+                </div>
+
+                <div>
+                    <label for="username"
+                           class="hidden md:block mb-2 text-sm font-medium text-gray-900  ">Identifiant</label>
+                    <input type="text" name="username" id="username"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                           placeholder="Identifiant">
+                </div>
+                <div>
+                    <label for="password"
+                           class="hidden md:block mb-2 text-sm font-medium text-gray-900 ">Mot de passe</label>
+                    <input type="password" name="password" id="password" placeholder="Mot de passe"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                </div>
+                <div class="md:flex justify-between items-end">
+                    <button type="submit"
+                            class="w-full md:w-auto text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center md:">
+                        Connexion
+                    </button>
+
+                    <a href="#"
+                       class="md:ml-2 text-sm font-medium text-primary-600 hover:underline">Mot
+                        de passe oublié</a>
+                </div>
+
+                <p class="text-sm font-light text-gray-500 ">
+                    Pas de compte? <a href="#"
+                                      class="font-medium text-primary-600 hover:underline">Créer
+                    de compte</a>
+                </p>
+            </form>
         </div>
+    </div>
+</div>
 
-    </form>
-
-</main>
-
+<footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>
