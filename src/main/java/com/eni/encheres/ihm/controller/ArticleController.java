@@ -3,6 +3,7 @@ package com.eni.encheres.ihm.controller;
 import com.eni.encheres.bll.ArticleService;
 import com.eni.encheres.bll.CategorieService;
 import com.eni.encheres.bo.Article;
+import com.eni.encheres.dao.AdresseDAO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,10 +21,14 @@ public class ArticleController {
     @Autowired
     private CategorieService categorieService;
 
+    @Autowired
+    private AdresseDAO adresseDAO;
+
     @GetMapping
     public String listArticles(Model model, @ModelAttribute("message") String message) {
         model.addAttribute("articles", articleService.getActiveArticles());
         model.addAttribute("message", message);
+        model.addAttribute("addresses", adresseDAO.findAll());
         return "article/list";
     }
 
@@ -46,8 +51,15 @@ public class ArticleController {
     }
 
     @PostMapping("/new")
-    public String saveArticle(@ModelAttribute("article") @Valid Article article, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String saveArticle(
+            @ModelAttribute("article") @Valid Article article,
+            BindingResult result,
+            Model model,
+            RedirectAttributes redirectAttributes
+    ) {
         if (result.hasErrors()) {
+            model.addAttribute("categories", categorieService.getAllCategories());
+            model.addAttribute("addresses", adresseDAO.findAll());
             return "article/sell";
         }
 
@@ -65,7 +77,7 @@ public class ArticleController {
             article.setNo_adresse_retrait(0);
         }
 
-        article.setId_utilisateur("currentUser"); // Utilisateur connecté
+        article.setId_utilisateur("currentUser");
         articleService.saveArticle(article);
 //        return "redirect:/articles/photo/" + article.getNo_article();
         redirectAttributes.addFlashAttribute("message", "Article mis en vente avec succès !");

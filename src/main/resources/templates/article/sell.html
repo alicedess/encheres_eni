@@ -64,7 +64,8 @@
             <label for="no_adresse_retrait" class="block text-gray-700 text-sm font-bold mb-2">Adresse de retrait :</label>
             <select id="no_adresse_retrait" name="no_adresse_retrait" th:field="*{no_adresse_retrait}" class="shadow border rounded w-full py-2 px-3">
                 <option value="" disabled selected>Choisissez une adresse</option>
-                <option th:each="adresse : ${addresses}" th:value="${adresse}" th:text="${adresse}"></option>
+                <option th:each="adresse : ${addresses}" th:value="${adresse.no_adresse}"
+                        th:text="${adresse.rue + ', ' + adresse.code_postal + ', ' + adresse.ville}"></option>
             </select>
         </div>
 
