@@ -1,4 +1,4 @@
-package com.eni.encheres.ihm.controller.security;
+package com.eni.encheres.ihm.controller;
 
 import com.eni.encheres.bll.ArticleService;
 import com.eni.encheres.bll.CategorieService;
@@ -25,10 +25,10 @@ public class ArticleController {
     }
 
     @GetMapping("/list")
-    public String showHome(@RequestParam(value = "nameFilter", required = false) String nameFilter,
-                           @RequestParam(value = "categoryFilter", required = false) Integer categoryFilter,
+    public String showHome(@RequestParam(value = "nameFilter", required = false, defaultValue = "") String nameFilter,
+                           @RequestParam(value = "categoryFilter", required = false, defaultValue = "0") Integer categoryFilter,
                            Model model) {
-        List<Article> articles = articleService.getArticles(categoryFilter != null ? categoryFilter : 0, nameFilter);
+        List<Article> articles = articleService.getArticles(categoryFilter, nameFilter);
         List<Categorie> categories = categorieService.getAll();
 
         model.addAttribute("articles", articles);

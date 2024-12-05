@@ -35,9 +35,6 @@ public class SpringSecurityConfig {
                     .requestMatchers("/").permitAll()
                     .requestMatchers("/registration").permitAll()
                     .requestMatchers("/articles/**").permitAll()
-                    .requestMatchers("/css/**").permitAll()
-                    .requestMatchers("/js/**").permitAll()
-                    .requestMatchers("/images/**").permitAll()
                     .anyRequest().authenticated();
         });
 

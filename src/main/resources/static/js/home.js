@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const toggleFilters = document.getElementById("toggleFilters");
     const filtersPopup = document.getElementById("filtersPopup");
     const closeFilters = document.getElementById("closeFilters");
+
     let name = "";
     let category = 0;
 
