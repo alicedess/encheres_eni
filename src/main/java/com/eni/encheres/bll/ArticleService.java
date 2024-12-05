@@ -39,10 +39,3 @@ public class ArticleService {
         return categorieDAO.findAll();
     }
 }
-
-//    public List<Adresse> getAvailableAddresses(String userId) {
-//        List<Adresse> addresses = adresseDAO.findAllByUserId(userId);
-//        addresses.addAll(adresseDAO.findDefaultAddresses());
-//        return addresses;
-//    }
-//}

@@ -1,30 +1,30 @@
 package com.eni.encheres.bo;
 
 public class Categorie {
-    private Integer noCategorie;
-    private String nom;
+    private Integer no_categorie;
+    private String libelle;
 
-    public Categorie() {
+    public Integer getNo_categorie() {
+        return no_categorie;
     }
 
-    public Categorie(Integer noCategorie, String nom) {
-        this.noCategorie = noCategorie;
-        this.nom = nom;
+    public void setNo_categorie(Integer no_categorie) {
+        this.no_categorie = no_categorie;
     }
 
-    public Integer getNoCategorie() {
-        return noCategorie;
+    public String getLibelle() {
+        return libelle;
     }
 
-    public void setNoCategorie(Integer noCategorie) {
-        this.noCategorie = noCategorie;
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
     }
 
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
+    @Override
+    public String toString() {
+        return "Categorie{" +
+                "no_categorie=" + no_categorie +
+                ", libelle='" + libelle + '\'' +
+                '}';
     }
 }

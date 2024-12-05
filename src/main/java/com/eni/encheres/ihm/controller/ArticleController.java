@@ -28,7 +28,6 @@ public class ArticleController {
     public String listArticles(Model model, @ModelAttribute("message") String message) {
         model.addAttribute("articles", articleService.getActiveArticles());
         model.addAttribute("message", message);
-        model.addAttribute("addresses", adresseDAO.findAll());
         return "article/list";
     }
 
@@ -36,6 +35,7 @@ public class ArticleController {
     public String showSellForm(Model model) {
         model.addAttribute("article", new Article());
         model.addAttribute("categories", categorieService.getAllCategories());
+        model.addAttribute("addresses", adresseDAO.findAll());
         return "article/sell";
     }
 
@@ -74,10 +74,12 @@ public class ArticleController {
         }
 
         if (article.getNo_adresse_retrait() == null) {
-            article.setNo_adresse_retrait(0);
+            redirectAttributes.addFlashAttribute("error", "Veuillez sélectionner une adresse.");
+            return "redirect:/articles/new";
         }
 
         article.setId_utilisateur("currentUser");
+
         articleService.saveArticle(article);
 //        return "redirect:/articles/photo/" + article.getNo_article();
         redirectAttributes.addFlashAttribute("message", "Article mis en vente avec succès !");
