@@ -1,21 +1,34 @@
 package com.eni.encheres.bo;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class Adresse {
-    private Integer no_adresse;
+
+
+    private Integer noAdresse;
+
+    @NotBlank(message = "Ce champs ne peut pas être vide ")
     private String rue;
-    private String code_postal;
+
+    @NotBlank(message = "Ce champs ne peut pas être vide ")
+    private String codePostal;
+
+    @NotBlank(message = "Ce champs ne peut pas être vide ")
     private String ville;
-    private Boolean adresse_eni;
+
+
+    private Boolean adresseEni;
 
     public Adresse() {
+        this.adresseEni = false;
     }
 
-    public Integer getNo_adresse() {
-        return no_adresse;
+    public Integer getNoAdresse() {
+        return noAdresse;
     }
 
-    public void setNo_adresse(Integer no_adresse) {
-        this.no_adresse = no_adresse;
+    public void setNoAdresse(Integer noAdresse) {
+        this.noAdresse = noAdresse;
     }
 
     public String getRue() {
@@ -26,12 +39,12 @@ public class Adresse {
         this.rue = rue;
     }
 
-    public String getCode_postal() {
-        return code_postal;
+    public String getCodePostal() {
+        return codePostal;
     }
 
-    public void setCode_postal(String code_postal) {
-        this.code_postal = code_postal;
+    public void setCodePostal(String codePostal) {
+        this.codePostal = codePostal;
     }
 
     public String getVille() {
@@ -42,23 +55,23 @@ public class Adresse {
         this.ville = ville;
     }
 
-    public Boolean getAdresse_eni() {
-        return adresse_eni;
+    public Boolean getAdresseEni() {
+        return adresseEni;
     }
 
-    public void setAdresse_eni(Boolean adresse_eni) {
-        this.adresse_eni = adresse_eni;
+    public void setAdresseEni(Boolean adresseEni) {
+        this.adresseEni = adresseEni;
     }
 
 
     @Override
     public String toString() {
         return "Adresse{" +
-                "no_adresse=" + no_adresse +
+                "no_adresse=" + noAdresse +
                 ", rue='" + rue + '\'' +
-                ", code_postal='" + code_postal + '\'' +
+                ", code_postal='" + codePostal + '\'' +
                 ", ville='" + ville + '\'' +
-                ", adresse_eni=" + adresse_eni +
+                ", adresse_eni=" + adresseEni +
                 '}';
     }
 }

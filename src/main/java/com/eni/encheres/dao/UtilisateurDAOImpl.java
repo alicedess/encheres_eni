@@ -15,6 +15,9 @@ import java.sql.SQLException;
 public class UtilisateurDAOImpl implements UtilisateurDAO {
 
     private final String FIND_BY_PSEUDO = "SELECT pseudo, email, nom, prenom, telephone, credit, administrateur, no_adresse from utilisateurs WHERE pseudo = :pseudo";
+    private final String FIND_BY_EMAIL = "SELECT pseudo, email, nom, prenom, telephone, credit, administrateur, no_adresse from utilisateurs WHERE email = :email";
+    private static final String INSERT = "INSERT INTO utilisateurs (pseudo, nom, prenom, email, telephone, mot_de_passe, credit, administrateur, no_adresse) VALUES (:pseudo, :nom, :prenom, :email, :telephone, :mot_de_passe,:credit, :administrateur, :no_adresse)";
+
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
@@ -27,6 +30,31 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("pseudo", pseudo);
         return jdbcTemplate.queryForObject(FIND_BY_PSEUDO, mapSqlParameterSource, new UtilisateurRowMapper());
+    }
+
+    @Override
+    public Utilisateur findByEmail(String email) {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("email", email);
+        return jdbcTemplate.queryForObject(FIND_BY_EMAIL, mapSqlParameterSource, new UtilisateurRowMapper());
+    }
+
+    @Override
+    public void create(Utilisateur utilisateur) {
+
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("pseudo", utilisateur.getPseudo());
+        mapSqlParameterSource.addValue("nom", utilisateur.getNom());
+        mapSqlParameterSource.addValue("prenom", utilisateur.getPrenom());
+        mapSqlParameterSource.addValue("email", utilisateur.getEmail());
+        mapSqlParameterSource.addValue("telephone", utilisateur.getTelephone());
+        mapSqlParameterSource.addValue("mot_de_passe", utilisateur.getMotDePasse());
+        mapSqlParameterSource.addValue("credit", utilisateur.getCredit());
+        mapSqlParameterSource.addValue("administrateur", utilisateur.getAdministrateur());
+        mapSqlParameterSource.addValue("no_adresse", utilisateur.getAdresse().getNoAdresse());
+
+        jdbcTemplate.update(INSERT, mapSqlParameterSource);
+
     }
 
     class UtilisateurRowMapper implements RowMapper<Utilisateur> {
@@ -43,7 +71,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             u.setAdministrateur(rs.getBoolean("administrateur"));
 
             Adresse adresse = new Adresse();
-            adresse.setNo_adresse(rs.getInt("no_adresse"));
+            adresse.setNoAdresse(rs.getInt("no_adresse"));
             u.setAdresse(adresse);
             return u;
         }

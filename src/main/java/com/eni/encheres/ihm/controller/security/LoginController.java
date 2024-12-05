@@ -1,7 +1,6 @@
 package com.eni.encheres.ihm.controller.security;
 
 
-import com.eni.encheres.bll.contexte.UtilisateurService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,11 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class LoginController {
 
-    private UtilisateurService contexteService;
-
-//    public LoginController(ContexteService contexteService) {
-//        this.contexteService = contexteService;
-//    }
 
     @GetMapping("/login")
     public String login(Model model) {
