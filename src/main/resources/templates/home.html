@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les objets sont nos amis</title>
+    <link href="/css/output.css" rel="stylesheet">
+    <link href="/css/tailwind.css" rel="stylesheet">
+    <script src="/js/home.js"></script>
+</head>
+<body>
+<div class="mx-auto bg-white p-6 rounded shadow-md">
+    <button id="toggleFilters" class="block sm:hidden w-full text-center bg-blue-600 text-white p-2 rounded mb-4">
+        Filtres
+    </button>
+
+    <form id="filtersPopup" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 hidden z-50">
+        <div class="bg-white w-11/12 max-w-md mx-auto mt-20 p-4 rounded shadow-lg relative">
+            <button id="closeFilters" class="absolute top-2 right-2 text-gray-600 text-2xl font-bold focus:outline-none">
+                &times;
+            </button>
+            <h2 class="text-lg font-semibold mb-4">Filtres</h2>
+            <!-- Barre de recherche -->
+            <div class="flex flex-col mb-4">
+                <input id="nameFilter"
+                       type="text"
+                       name="nameFilter"
+                       placeholder="Le nom de l'article contient"
+                       class="border rounded px-4 py-2 focus:ring focus:ring-blue-300"
+                       th:value="${nameFilter}"
+                />
+            </div>
+
+            <!-- Filtre catégorie -->
+            <div class="flex flex-col mb-4">
+                <label for="categoryFilter" class="font-medium text-gray-700">
+                    Catégorie :
+                </label>
+                <select
+                        id="categoryFilter"
+                        name="categoryFilter"
+                        class="border rounded px-4 py-2 focus:ring focus:ring-blue-300"
+                >
+                    <option value="0">Toutes</option>
+                    <option th:each="cat : ${categories}"
+                            th:value="${cat.getNo_categorie()}"
+                            th:text="${cat.getLibelle()}"
+                            th:selected="${selectedCategory == cat.getNo_categorie()}">
+                    </option>
+                </select>
+            </div>
+            <div  th:if="false">
+                <div class="flex flex-col mb-4">
+                    <label class="flex items-center">
+                        <input type="radio" name="filterType" value="achats" class="mr-2 focus:ring focus:ring-blue-300" th:checked="${filterType == 'achats'}">
+                        Achats
+                    </label>
+                    <select class="border rounded px-4 py-2 focus:ring focus:ring-blue-300" th:disabled="${filterType != 'achats'}">
+                        <option value="open">Enchères ouvertes</option>
+                        <option value="in_progress">Mes enchères en cours</option>
+                        <option value="won">Mes enchères remportées</option>
+                    </select>
+                </div>
+                <div class="flex flex-col mb-4">
+                    <label class="flex items-center">
+                        <input type="radio" name="filterType" value="ventes" class="mr-2 focus:ring focus:ring-blue-300" th:checked="${filterType == 'ventes'}">
+                        Mes ventes
+                    </label>
+                    <select class="border rounded px-4 py-2 focus:ring focus:ring-blue-300" th:disabled="${filterType != 'ventes'}">
+                        <option value="current">Mes ventes en cours</option>
+                        <option value="upcoming">Mes ventes non débutées</option>
+                        <option value="finished">Mes ventes terminées</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Boutons -->
+            <div class="flex justify-between">
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Rechercher
+                </button>
+                <button type="button" class="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400" onclick="resetFilters()">
+                    Annuler
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <form id="filters-page" class="hidden sm:block">
+        <div class="text-lg font-semibold mb-4">Filtres :</div>
+
+        <!-- Barre de recherche -->
+        <div class="flex items-center mb-3">
+            <input id="nameFilter"
+                   type="text"
+                   name="nameFilter"
+                   placeholder="Le nom de l'article contient"
+                   class="border rounded px-4 py-2 w-60 focus:ring focus:ring-blue-300"
+                   th:value="${nameFilter}"
+            />
+            <div class="pl-6">
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-28 h-10">
+                    Rechercher
+                </button>
+                <button type="button" onclick="resetFilters()" class="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400 w-28 h-10 ml-2">
+                    Annuler
+                </button>
+            </div>
+        </div>
+        <!-- Filtre de catégorie -->
+        <div class="flex w-96 pb-3 justify-between">
+            <label for="categoryFilter" class="block font-medium text-gray-700">
+                Catégorie :
+                <select id="categoryFilter"
+                        name="categoryFilter"
+                        class="border rounded px-4 py-2 w-full focus:ring focus:ring-blue-300">
+                    <option value="0">Toutes</option>
+                    <option th:each="cat : ${categories}"
+                            th:value="${cat.getNo_categorie()}"
+                            th:text="${cat.getLibelle()}"
+                            th:selected="${selectedCategory == cat.getNo_categorie()}">
+                    </option>
+                </select>
+            </label>
+        </div>
+
+        <!-- Options supplémentaires lorsque le user est connecté TO-DO -->
+        <div  th:if="false">
+            <div class="flex items-center space-x-4 mb-4">
+                <label class="flex items-center">
+                    <input type="radio" name="filterType" value="achats" class="mr-2 focus:ring focus:ring-blue-300" th:checked="${filterType == 'achats'}">
+                    Achats
+                </label>
+                <select class="border rounded px-4 py-2 focus:ring focus:ring-blue-300" th:disabled="${filterType != 'achats'}">
+                    <option value="open">Enchères ouvertes</option>
+                    <option value="in_progress">Mes enchères en cours</option>
+                    <option value="won">Mes enchères remportées</option>
+                </select>
+                <label class="flex items-center">
+                    <input type="radio" name="filterType" value="ventes" class="mr-2 focus:ring focus:ring-blue-300" th:checked="${filterType == 'ventes'}">
+                    Mes ventes
+                </label>
+                <select class="border rounded px-4 py-2 focus:ring focus:ring-blue-300" th:disabled="${filterType != 'ventes'}">
+                    <option value="current">Mes ventes en cours</option>
+                    <option value="upcoming">Mes ventes non débutées</option>
+                    <option value="finished">Mes ventes terminées</option>
+                </select>
+            </div>
+        </div>
+    </form>
+
+    <!-- Liste des enchères -->
+    <div th:if="!${articles.isEmpty()}" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-6">
+        <div class="bg-white border rounded p-4 shadow" th:each="article : ${articles}">
+            <div class="grid grid-cols-2 gap-x-6">
+                <div class="bg-gray-200 rounded mb-4 col-span-1 h-full"></div>
+                <div class="col-span-1 grid gap-y-2">
+                    <a href="/details/${item.id}"
+                       class="text-blue-600 text-lg font-bold hover:underline text-center"
+                       th:text="${article.nom_article}">
+                    </a>
+                    <p class="text-gray-700" th:text="'Prix : ' +${article.prix_initial} + ' point(s)'"></p>
+                    <p class="text-gray-700" th:text="'Fin de l\'enchère : ' + ${article.date_fin_encheres}"></p>
+                    <p class="text-gray-700" th:text="!false ? 'Vendeur : ' + ${article.id_utilisateur} : 'Vendeur : '">
+                        <a th:if="false"
+                           href="/profile/${item.seller.id}"
+                           class="text-blue-500 hover:underline"
+                           th:text="${article.id_utilisateur}">
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${articles.isEmpty()}" class="flex items-center justify-center h-full">
+        <img src="/images/aucune-data.jpg"
+             alt="Aucune donnée disponible"
+             class="w-1/2 max-w-xs md:max-w-md mx-auto"/>
+    </div>
+</div>
+</body>
+</html>

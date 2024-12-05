@@ -30,21 +30,20 @@
         --accent-color: #10B981;
     }
 }
-
 /* Styles pour le menu hamburger */
 #menu-toggle {
     @apply text-white text-2xl focus:outline-none;
 }
 
 #navbar {
-    @apply sm:flex sm:space-x-6 space-y-4 sm:space-y-0 absolute sm:relative sm:block sm:bg-transparent top-0 left-0 w-full sm:w-auto transform sm:transform-none transition-all duration-300 ease-in-out hidden;
+    @apply sm:flex sm:space-x-6 space-y-4 sm:space-y-0 absolute sm:relative sm:block bg-primary sm:bg-transparent top-0 left-0 w-full sm:w-auto transform sm:transform-none transition-all duration-300 ease-in-out hidden;
 
     background-color: var(--primary-color);
     z-index: 100;
 }
 
 #navbar ul {
-    @apply flex flex-col sm:flex-row sm:space-x-6 space-y-4 sm:space-y-0 p-4 sm:p-0 sm:bg-transparent;
+    @apply flex flex-col sm:flex-row sm:space-x-6 space-y-4 sm:space-y-0 p-4 sm:p-0 bg-primary sm:bg-transparent;
 
 }
 
