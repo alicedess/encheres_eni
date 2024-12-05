@@ -9,17 +9,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import jakarta.validation.Valid;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 
+import java.security.Principal;
+
 @Controller
-public class RegistrationController {
+public class UtilisateurController {
 
 
     private UtilisateurService utilisateurService;
 
-    public RegistrationController(UtilisateurService utilisateurService) {
+    public UtilisateurController(UtilisateurService utilisateurService) {
         this.utilisateurService = utilisateurService;
     }
 
@@ -52,5 +55,17 @@ public class RegistrationController {
                 return "registration";
             }
         }
+    }
+
+    @GetMapping("/profile/{pseudo}")
+    public String showProfile(Model model, Principal principal, @PathVariable String pseudo) {
+        Utilisateur utilisateur = utilisateurService.getByPseudo(pseudo);
+        boolean isLoggedUser = false;
+        if (pseudo.equals(principal.getName())) {
+            isLoggedUser = true;
+        }
+        model.addAttribute("user", utilisateur);
+        model.addAttribute("isLoggedUser", isLoggedUser);
+        return "profile";
     }
 }
