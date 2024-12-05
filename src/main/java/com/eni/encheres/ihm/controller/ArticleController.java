@@ -1,4 +1,4 @@
-package com.eni.encheres.ihm.controller;
+package com.eni.encheres.ihm.controller.security;
 
 import com.eni.encheres.bll.ArticleService;
 import com.eni.encheres.bll.CategorieService;
@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-
-import static java.lang.Integer.parseInt;
 
 @Controller
 @RequestMapping("/articles")
@@ -30,7 +28,7 @@ public class ArticleController {
     public String showHome(@RequestParam(value = "nameFilter", required = false) String nameFilter,
                            @RequestParam(value = "categoryFilter", required = false) Integer categoryFilter,
                            Model model) {
-        List<Article> articles = articleService.getArticles(categoryFilter, nameFilter);
+        List<Article> articles = articleService.getArticles(categoryFilter != null ? categoryFilter : 0, nameFilter);
         List<Categorie> categories = categorieService.getAll();
 
         model.addAttribute("articles", articles);

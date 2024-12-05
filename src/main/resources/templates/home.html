@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les objets sont nos amis</title>
+    <title>Accueil</title>
     <link href="/css/output.css" rel="stylesheet">
-    <link href="/css/tailwind.css" rel="stylesheet">
     <script src="/js/home.js"></script>
 </head>
 <body>
-<div class="mx-auto bg-white p-6 rounded shadow-md">
+<div th:insert="fragments/header :: header"></div>
+<main class="mx-auto bg-white p-6 rounded shadow-md">
     <button id="toggleFilters" class="block sm:hidden w-full text-center bg-blue-600 text-white p-2 rounded mb-4">
         Filtres
     </button>
@@ -49,7 +49,7 @@
                     </option>
                 </select>
             </div>
-            <div  th:if="false">
+            <div th:if="${#authorization.expression('isAuthenticated()')}">
                 <div class="flex flex-col mb-4">
                     <label class="flex items-center">
                         <input type="radio" name="filterType" value="achats" class="mr-2 focus:ring focus:ring-blue-300" th:checked="${filterType == 'achats'}">
@@ -125,7 +125,7 @@
         </div>
 
         <!-- Options supplémentaires lorsque le user est connecté TO-DO -->
-        <div  th:if="false">
+        <div th:if="${#authorization.expression('isAuthenticated()')}">
             <div class="flex items-center space-x-4 mb-4">
                 <label class="flex items-center">
                     <input type="radio" name="filterType" value="achats" class="mr-2 focus:ring focus:ring-blue-300" th:checked="${filterType == 'achats'}">
@@ -152,7 +152,7 @@
     <!-- Liste des enchères -->
     <div th:if="!${articles.isEmpty()}" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-6">
         <div class="bg-white border rounded p-4 shadow" th:each="article : ${articles}">
-            <div class="grid grid-cols-2 gap-x-6">
+            <div class="grid grid-cols-2 gap-x-6 h-full">
                 <div class="bg-gray-200 rounded mb-4 col-span-1 h-full"></div>
                 <div class="col-span-1 grid gap-y-2">
                     <a href="/details/${item.id}"
@@ -162,7 +162,7 @@
                     <p class="text-gray-700" th:text="'Prix : ' +${article.prix_initial} + ' point(s)'"></p>
                     <p class="text-gray-700" th:text="'Fin de l\'enchère : ' + ${article.date_fin_encheres}"></p>
                     <p class="text-gray-700" th:text="!false ? 'Vendeur : ' + ${article.id_utilisateur} : 'Vendeur : '">
-                        <a th:if="false"
+                        <a th:if="${#authorization.expression('isAuthenticated()')}"
                            href="/profile/${item.seller.id}"
                            class="text-blue-500 hover:underline"
                            th:text="${article.id_utilisateur}">
@@ -177,6 +177,7 @@
              alt="Aucune donnée disponible"
              class="w-1/2 max-w-xs md:max-w-md mx-auto"/>
     </div>
-</div>
+</main>
+<div th:insert="fragments/footer :: footer"></div>
 </body>
 </html>
