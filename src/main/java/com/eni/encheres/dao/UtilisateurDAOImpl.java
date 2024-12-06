@@ -51,7 +51,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         mapSqlParameterSource.addValue("mot_de_passe", utilisateur.getMotDePasse());
         mapSqlParameterSource.addValue("credit", utilisateur.getCredit());
         mapSqlParameterSource.addValue("administrateur", utilisateur.getAdministrateur());
-        mapSqlParameterSource.addValue("no_adresse", utilisateur.getAdresse().getNoAdresse());
+        mapSqlParameterSource.addValue("no_adresse", utilisateur.getAdresse().getNo_adresse());
 
         jdbcTemplate.update(INSERT, mapSqlParameterSource);
 
@@ -71,7 +71,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
             u.setAdministrateur(rs.getBoolean("administrateur"));
 
             Adresse adresse = new Adresse();
-            adresse.setNoAdresse(rs.getInt("no_adresse"));
+            adresse.setNo_adresse(rs.getInt("no_adresse"));
             u.setAdresse(adresse);
             return u;
         }

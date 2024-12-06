@@ -4,9 +4,6 @@ public class Categorie {
     private Integer no_categorie;
     private String libelle;
 
-    public Categorie() {
-    }
-
     public Integer getNo_categorie() {
         return no_categorie;
     }
@@ -23,4 +20,11 @@ public class Categorie {
         this.libelle = libelle;
     }
 
+    @Override
+    public String toString() {
+        return "Categorie{" +
+                "no_categorie=" + no_categorie +
+                ", libelle='" + libelle + '\'' +
+                '}';
+    }
 }

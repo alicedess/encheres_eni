@@ -26,7 +26,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     @Override
     public Utilisateur getByPseudo(String pseudo) {
         Utilisateur utilisateur = this.utilisateurDAO.find(pseudo);
-        utilisateur.setAdresse(adresseDAO.find(utilisateur.getAdresse().getNoAdresse()));
+        utilisateur.setAdresse(adresseDAO.find(utilisateur.getAdresse().getNo_adresse()));
         return utilisateur;
     }
 
@@ -44,11 +44,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
             int adresseId = createAdresse(utilisateur, be);
             try {
                 Adresse adresse = new Adresse();
-                adresse.setNoAdresse(adresseId);
+                adresse.setNo_adresse(adresseId);
+                adresse.setNo_adresse(adresseId);
                 if (utilisateur.getTelephone().isEmpty()) {
                     utilisateur.setTelephone(null);
                 }
                 utilisateur.setAdresse(adresse);
+                System.out.println(utilisateur.getMotDePasse());
                 utilisateurDAO.create(utilisateur);
                 //
             } catch (DataAccessException e) {
@@ -112,7 +114,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
                 be.add("Erreur lors de la création de l'adresse");
             }
         } else {
-            adresseId = adresse.getNoAdresse();
+            adresseId = adresse.getNo_adresse();
         }
         return adresseId;
     }
