@@ -45,6 +45,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
             try {
                 Adresse adresse = new Adresse();
                 adresse.setNo_adresse(adresseId);
+                adresse.setNo_adresse(adresseId);
+                if (utilisateur.getTelephone().isEmpty()) {
+                    utilisateur.setTelephone(null);
+                }
                 utilisateur.setAdresse(adresse);
                 System.out.println(utilisateur.getMotDePasse());
                 utilisateurDAO.create(utilisateur);
