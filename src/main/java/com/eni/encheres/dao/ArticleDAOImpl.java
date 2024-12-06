@@ -2,35 +2,37 @@ package com.eni.encheres.dao;
 
 import com.eni.encheres.bo.Article;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@Profile("mysql")
 @Repository
 public class ArticleDAOImpl implements ArticleDAO {
+
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private final RowMapper<Article> ARTICLE_ROW_MAPPER = (rs, rowNum) -> {
         Article article = new Article();
         article.setNo_article(rs.getInt("no_article"));
         article.setNom_article(rs.getString("nom_article"));
         article.setPhoto(rs.getString("photo"));
-
-        // Gestion des dates avec LocalDateTime
+        article.setDescription(rs.getString("description"));
         Timestamp dateDebut = rs.getTimestamp("date_debut_encheres");
         Timestamp dateFin = rs.getTimestamp("date_fin_encheres");
         article.setDate_debut_encheres(dateDebut != null ? dateDebut.toLocalDateTime() : null);
         article.setDate_fin_encheres(dateFin != null ? dateFin.toLocalDateTime() : null);
-
         article.setStatut_enchere(rs.getInt("statut_enchere"));
         article.setPrix_initial(rs.getInt("prix_initial"));
         article.setId_utilisateur(rs.getString("id_utilisateur"));
@@ -60,10 +62,8 @@ public class ArticleDAOImpl implements ArticleDAO {
             ps.setString(1, article.getNom_article());
             ps.setString(2, article.getDescription());
             ps.setString(3, article.getPhoto());
-
             ps.setTimestamp(4, article.getDate_debut_encheres() != null ? Timestamp.valueOf(article.getDate_debut_encheres()) : null);
             ps.setTimestamp(5, article.getDate_fin_encheres() != null ? Timestamp.valueOf(article.getDate_fin_encheres()) : null);
-
             ps.setInt(6, article.getStatut_enchere());
             ps.setInt(7, article.getPrix_initial());
             ps.setString(8, article.getId_utilisateur());
@@ -77,5 +77,25 @@ public class ArticleDAOImpl implements ArticleDAO {
     public void deleteById(Integer articleId) {
         String sql = "DELETE FROM articles_a_vendre WHERE no_article = ?";
         jdbcTemplate.update(sql, articleId);
+    }
+
+    @Override
+    public List<Article> selectArticles(int catId, String name) {
+        StringBuilder sqlRequest = new StringBuilder("SELECT * FROM encheres_db.articles_a_vendre");
+        Map<String, Object> params = new HashMap<>();
+
+        boolean hasWhere = false;
+        if (catId > 0) {
+            sqlRequest.append(" WHERE no_categorie = :catId");
+            params.put("catId", catId);
+            hasWhere = true;
+        }
+        if (name != null && !name.isEmpty()) {
+            sqlRequest.append(hasWhere ? " AND" : " WHERE");
+            sqlRequest.append(" nom_article LIKE :name");
+            params.put("name", "%" + name + "%");
+        }
+
+        return namedParameterJdbcTemplate.query(sqlRequest.toString(), params, ARTICLE_ROW_MAPPER);
     }
 }

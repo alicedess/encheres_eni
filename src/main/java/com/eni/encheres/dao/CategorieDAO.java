@@ -5,4 +5,5 @@ import java.util.List;
 
 public interface CategorieDAO {
         List<Categorie> findAll();
+        List<Categorie> getCategories();
 }

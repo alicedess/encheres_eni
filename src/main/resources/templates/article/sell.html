@@ -11,14 +11,14 @@
 <div th:insert="fragments/header :: header"></div>
 
 <!-- Contenu principal -->
-<main class="flex-1 flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
-    <div class="w-full bg-white rounded-lg shadow sm:max-w-lg xl:p-0">
-        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+<main class="flex-1 flex flex-col items-center justify-center px-6 py-8 mx-auto lg:px-20">
+    <div class="w-full max-w-4xl bg-white rounded-lg shadow sm:p-8">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8 md:px-12 lg:px-16">
             <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
                 Vendre un article
             </h1>
 
-            <form th:action="@{/articles/new}" method="post" th:object="${article}" class="space-y-4 md:space-y-6">
+            <form th:action="@{/articles/sell}" method="post" th:object="${article}" class="space-y-4 md:space-y-6">
                 <!-- Nom de l'article -->
                 <div>
                     <label for="nom_article" class="block text-sm font-medium text-gray-900">Nom de l'article :</label>
@@ -93,7 +93,7 @@
                     <select id="no_adresse_retrait" name="no_adresse_retrait" th:field="*{no_adresse_retrait}"
                             class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                         <option value="" disabled selected>Choisissez une adresse</option>
-                        <option th:each="adresse : ${addresses}" th:value="${adresse.no_adresse}"
+                        <option th:each="adresse : ${adresses}" th:value="${adresse.no_adresse}"
                                 th:text="${adresse.rue + ', ' + adresse.code_postal + ', ' + adresse.ville}"></option>
                     </select>
                 </div>
