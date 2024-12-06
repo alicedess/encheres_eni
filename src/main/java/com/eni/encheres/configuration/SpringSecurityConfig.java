@@ -3,7 +3,6 @@ package com.eni.encheres.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
@@ -32,18 +31,16 @@ public class SpringSecurityConfig {
         http.authorizeHttpRequests(auth -> {
             auth
                     .requestMatchers(HttpMethod.GET, "/test").permitAll()
-                    .requestMatchers("/css/**", "/images/**").permitAll()
-                    .requestMatchers("/").permitAll()
+                    .requestMatchers("/css/**", "/images/**", "/js/**").permitAll()
                     .requestMatchers("/registration").permitAll()
                     .requestMatchers("/articles/list**").permitAll()
-                    .requestMatchers("/css/**").permitAll()
-                    .requestMatchers("/js/**").permitAll()
-                    .requestMatchers("/images/**").permitAll()
                     .anyRequest().authenticated();
         });
 
         http.formLogin(form -> {
             form.loginPage("/login").permitAll();
+            form.defaultSuccessUrl("/articles/list").permitAll();
+
         });
 
         http.logout(logout ->

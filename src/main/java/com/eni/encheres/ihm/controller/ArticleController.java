@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.eni.encheres.bo.Categorie;
 
+import java.security.Principal;
 import java.util.List;
 
 
@@ -78,7 +79,8 @@ public class ArticleController {
             @ModelAttribute("article") @Valid Article article,
             BindingResult result,
             Model model,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            Principal principal
     ) {
         if (result.hasErrors()) {
             model.addAttribute("categories", categorieService.getAllCategories());
@@ -86,7 +88,6 @@ public class ArticleController {
             return "article/sell";
         }
 
-        System.out.println("Article description before saving: " + article.getDescription());
 
         if (article.getStatut_enchere() == null) {
             article.setStatut_enchere(0);
@@ -101,7 +102,7 @@ public class ArticleController {
             return "redirect:/articles/sell";
         }
 
-        article.setId_utilisateur("currentUser");
+        article.setId_utilisateur(principal.getName());
 
         articleService.saveArticle(article);
         redirectAttributes.addFlashAttribute("message", "Article mis en vente avec succès !");

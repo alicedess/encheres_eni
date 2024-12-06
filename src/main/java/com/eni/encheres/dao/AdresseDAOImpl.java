@@ -1,7 +1,6 @@
 package com.eni.encheres.dao;
 
 import com.eni.encheres.bo.Adresse;
-import com.eni.encheres.bo.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -24,7 +23,7 @@ public class AdresseDAOImpl implements AdresseDAO {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
-     @Override
+    @Override
     public List<Adresse> findAll() {
         return jdbcTemplate.query(FIND_ALL, new AdresseRowMapper());
     }

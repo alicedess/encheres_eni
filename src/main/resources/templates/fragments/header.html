@@ -18,10 +18,13 @@
                         <a href="/articles/list" class="hover:underline hover:text-blue-300 transition-all">Accueil</a>
                     </li>
                     <li data-th-if="${#authorization.expression('isAuthenticated()')}">
-                        <a href="/articles/sell" class="hover:underline hover:text-blue-300 transition-all">Vendre un article</a>
+                        <a href="/articles/sell" class="hover:underline hover:text-blue-300 transition-all">Vendre un
+                            article</a>
                     </li>
                     <li data-th-if="${#authorization.expression('isAuthenticated()')}">
-                        <a href="/profile" class="hover:underline hover:text-blue-300 transition-all">Mon profil</a>
+                        <a th:href="@{'/profile/'+${#authentication.getPrincipal().getUsername()}}"
+                           class="hover:underline hover:text-blue-300 transition-all">Mon
+                            profil</a>
                     </li>
                     <li data-th-if="${#authorization.expression('isAuthenticated()')}">
                         <a href="/logout">Se déconnecter</a>

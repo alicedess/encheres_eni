@@ -68,4 +68,9 @@ public class UtilisateurController {
         model.addAttribute("isLoggedUser", isLoggedUser);
         return "profile";
     }
+
+    @GetMapping("/")
+    public String index(Model model) {
+        return "redirect:/articles/list";
+    }
 }
