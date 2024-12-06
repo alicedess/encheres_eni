@@ -34,4 +34,8 @@ public class CategorieDAOImpl implements CategorieDAO {
         return jdbcTemplate.query(FIND_ALL, CATEGORIE_ROW_MAPPER);
     }
 
+    @Override
+    public List<Categorie> getCategories() {
+        return jdbcTemplate.query("SELECT * FROM encheres_db.categories", CATEGORIE_ROW_MAPPER);
+    }
 }
